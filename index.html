@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Torsion Spring Chart | Precision Garage Door Service</title>
+<style>
+  :root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page-plane:     #f9f9f7;
+    --card-surface:   #ffffff;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --baseline:       #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+    --brand:          #37495a;
+    --brand-2:        #4d6377;
+    --seq-100: #cde2fb; --seq-150: #b7d3f6; --seq-200: #9ec5f4; --seq-250: #86b6ef;
+    --seq-300: #6da7ec; --seq-350: #5598e7; --seq-400: #3987e5; --seq-450: #2a78d6;
+    --seq-500: #256abf; --seq-550: #1c5cab; --seq-600: #184f95; --seq-650: #104281;
+    --seq-700: #0d366b;
+    --cat-1: #2a78d6; --cat-2: #eb6834; --cat-3: #1baf7a; --cat-4: #eda100;
+    --cat-5: #e87ba4; --cat-6: #008300; --cat-7: #4a3aa7; --cat-8: #e34948; --cat-9: #2a78d6;
+    --stock-good: #0ca30c;
+    --stock-tint: rgba(12,163,12,0.12);
+    --stock-tint-hover: rgba(12,163,12,0.20);
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface-1:      #1a1a19;
+    --page-plane:     #0d0d0d;
+    --card-surface:   #202020;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #898781;
+    --gridline:       #2c2c2a;
+    --baseline:       #383835;
+    --border:         rgba(255,255,255,0.10);
+    --brand:          #7f97a9;
+    --brand-2:        #9fb2c0;
+    --cat-1: #3987e5; --cat-2: #d95926; --cat-3: #199e70; --cat-4: #c98500;
+    --cat-5: #d55181; --cat-6: #008300; --cat-7: #9085e9; --cat-8: #e66767; --cat-9: #3987e5;
+    --stock-good: #0ca30c;
+    --stock-tint: rgba(12,163,12,0.18);
+    --stock-tint-hover: rgba(12,163,12,0.28);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --surface-1:      #1a1a19;
+      --page-plane:     #0d0d0d;
+      --card-surface:   #202020;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --gridline:       #2c2c2a;
+      --baseline:       #383835;
+      --border:         rgba(255,255,255,0.10);
+      --brand:          #7f97a9;
+      --brand-2:        #9fb2c0;
+      --cat-1: #3987e5; --cat-2: #d95926; --cat-3: #199e70; --cat-4: #c98500;
+      --cat-5: #d55181; --cat-6: #008300; --cat-7: #9085e9; --cat-8: #e66767; --cat-9: #3987e5;
+      --stock-good: #0ca30c;
+      --stock-tint: rgba(12,163,12,0.18);
+      --stock-tint-hover: rgba(12,163,12,0.28);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--page-plane);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 20px 64px; }
+
+  header.top {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 20px; margin-bottom: 16px; flex-wrap: wrap;
+  }
+  .titleblock h1 {
+    font-size: 22px; margin: 0 0 4px; letter-spacing: 0.2px;
+  }
+  .titleblock .org {
+    font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--brand); margin-bottom: 2px;
+  }
+  .titleblock .org-sub {
+    font-size: 10.5px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 10px;
+  }
+  .credit {
+    margin-top: 26px; font-size: 11px; color: var(--text-muted); text-align: right;
+  }
+  .titleblock p.formula {
+    font-size: 13px; color: var(--text-secondary); margin: 3px 0; max-width: 640px;
+  }
+  .titleblock code {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 4px;
+    padding: 1px 5px; font-size: 12.5px; color: var(--text-primary);
+  }
+  .top-actions { display: flex; gap: 8px; align-items: center; }
+  button.theme-toggle {
+    border: 1px solid var(--border); background: var(--card-surface); color: var(--text-primary);
+    border-radius: 8px; padding: 7px 12px; font-size: 12.5px; cursor: pointer; white-space: nowrap;
+  }
+  button.theme-toggle:hover { border-color: var(--brand); }
+
+  .id-tabs {
+    display: flex; gap: 8px; margin-bottom: 22px; border-bottom: 1px solid var(--gridline); padding-bottom: 0;
+  }
+  .id-tab {
+    border: none; background: none; color: var(--text-muted); font-size: 14px; font-weight: 600;
+    padding: 9px 4px 10px; cursor: pointer; border-bottom: 2px solid transparent; margin-right: 14px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .id-tab .badge {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;
+    padding: 2px 6px; border-radius: 999px; background: var(--surface-1); color: var(--text-muted);
+  }
+  .id-tab[aria-selected="true"] { color: var(--text-primary); border-bottom-color: var(--brand); }
+  .id-tab[aria-selected="true"] .badge { background: var(--brand); color: #fff; }
+
+  .turns-ref {
+    background: var(--card-surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; margin-bottom: 22px;
+  }
+  .turns-ref h2 { font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.8px;
+    color: var(--text-muted); margin: 0 0 10px; font-weight: 700; }
+  .turns-ref table { border-collapse: collapse; font-size: 13px; }
+  .turns-ref th, .turns-ref td {
+    padding: 5px 16px 5px 0; text-align: left; font-variant-numeric: tabular-nums;
+  }
+  .turns-ref th { color: var(--text-muted); font-weight: 600; font-size: 11.5px;
+    text-transform: uppercase; letter-spacing: 0.4px; border-bottom: 1px solid var(--gridline); }
+  .turns-ref td { color: var(--text-secondary); border-bottom: 1px solid var(--gridline); }
+  .turns-ref tr:last-child td { border-bottom: none; }
+
+  .controls {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    margin-bottom: 18px; position: sticky; top: 0; z-index: 5;
+    background: var(--page-plane); padding: 10px 0;
+  }
+  .controls .label { font-size: 12px; color: var(--text-muted); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.6px; }
+  .pill-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .pill {
+    border: 1px solid var(--border); background: var(--card-surface); color: var(--text-secondary);
+    border-radius: 999px; padding: 6px 14px; font-size: 13px; cursor: pointer;
+    font-variant-numeric: tabular-nums;
+  }
+  .pill[aria-pressed="true"] {
+    background: var(--brand); border-color: var(--brand); color: #fff; font-weight: 600;
+  }
+  .legend-scale { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); }
+  .legend-bar {
+    width: 140px; height: 10px; border-radius: 5px;
+    background: linear-gradient(to right, var(--seq-100), var(--seq-400), var(--seq-700));
+    border: 1px solid var(--border);
+  }
+  .stock-legend { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
+  .stock-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--stock-good); display: inline-block; }
+
+  .finder-card {
+    background: var(--card-surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 18px 20px; margin-bottom: 22px;
+  }
+  .finder-card h2 { font-size: 16px; margin: 0 0 6px; }
+  .finder-sub { font-size: 12.5px; color: var(--text-secondary); margin: 0 0 16px; max-width: 720px; line-height: 1.55; }
+  .finder-controls { display: flex; gap: 28px; flex-wrap: wrap; margin-bottom: 16px; }
+  .finder-field { display: flex; flex-direction: column; gap: 6px; }
+  .finder-field-label {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); font-weight: 700;
+  }
+  .finder-rows { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .finder-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .finder-row-label { font-size: 12.5px; color: var(--text-secondary); font-weight: 600; min-width: 130px; }
+  select.finder-select {
+    border: 1px solid var(--border); background: var(--surface-1); color: var(--text-primary);
+    border-radius: 7px; padding: 7px 10px; font-size: 13px; font-variant-numeric: tabular-nums;
+    min-width: 88px;
+  }
+  select.finder-select:focus { outline: 2px solid var(--brand); outline-offset: 1px; }
+
+  .finder-result { border-top: 1px solid var(--gridline); padding-top: 14px; }
+  .finder-target { font-size: 13.5px; margin-bottom: 10px; }
+  .finder-target strong { font-variant-numeric: tabular-nums; }
+  .finder-target-sub { color: var(--text-muted); font-size: 12.5px; }
+  .finder-empty { font-size: 13px; color: var(--text-muted); margin: 0; }
+
+  .recommend-card {
+    border: 2px solid var(--stock-good); border-radius: 10px; padding: 14px 16px; margin-bottom: 14px;
+    background: var(--stock-tint);
+  }
+  .recommend-card.far { border-color: var(--baseline); background: var(--surface-1); }
+  .recommend-label {
+    font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px;
+    color: var(--stock-good); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;
+  }
+  .recommend-card.far .recommend-label { color: var(--text-muted); }
+  .recommend-spec { font-size: 19px; font-weight: 800; font-variant-numeric: tabular-nums; margin-bottom: 3px; }
+  .recommend-spec .plus { color: var(--text-muted); font-weight: 400; margin: 0 5px; }
+  .recommend-meta { font-size: 13px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+  .recommend-meta .diff-badge { margin-left: 8px; }
+
+  .alt-toggle {
+    background: none; border: none; color: var(--text-muted); font-size: 12px; cursor: pointer;
+    padding: 4px 0; text-decoration: underline; text-decoration-color: var(--border);
+  }
+  .alt-toggle:hover { color: var(--text-secondary); }
+  .match-list { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+  .match-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 8px 12px; border-radius: 8px; background: var(--surface-1); border: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .match-spec { font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .match-spec .plus { color: var(--text-muted); font-weight: 400; margin: 0 3px; }
+  .match-cap { font-size: 13px; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+  .diff-badge {
+    font-size: 11.5px; font-weight: 700; padding: 3px 8px; border-radius: 999px; font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .diff-badge.good { background: var(--stock-good); color: #fff; }
+  .diff-badge.far { background: var(--gridline); color: var(--text-secondary); }
+
+  .wire-card {
+    background: var(--card-surface); border: 1px solid var(--border); border-radius: 12px;
+    margin-bottom: 16px; overflow: hidden; border-left: 4px solid var(--accent-color, var(--brand));
+  }
+  .wire-card summary {
+    list-style: none; cursor: pointer; padding: 13px 16px; display: flex; align-items: baseline;
+    gap: 12px; justify-content: space-between;
+  }
+  .wire-card summary::-webkit-details-marker { display: none; }
+  .wire-card summary .name { font-size: 15px; font-weight: 700; }
+  .wire-card summary .meta { font-size: 12.5px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  .wire-card summary .chevron { color: var(--text-muted); font-size: 12px; transition: transform 0.15s; }
+  .wire-card[open] summary .chevron { transform: rotate(90deg); }
+
+  table.spring-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.spring-table th, table.spring-table td {
+    padding: 7px 10px; text-align: right; font-variant-numeric: tabular-nums;
+    border-bottom: 1px solid var(--gridline);
+  }
+  table.spring-table th:first-child, table.spring-table td:first-child,
+  table.spring-table th:nth-child(2), table.spring-table td:nth-child(2) { text-align: left; }
+  table.spring-table thead th {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; color: var(--text-muted);
+    font-weight: 600; border-bottom: 1px solid var(--baseline); position: sticky; top: 52px;
+    background: var(--card-surface);
+  }
+  table.spring-table thead th.selected { color: var(--brand); }
+  table.spring-table tbody tr:hover td { background: var(--surface-1); }
+
+  table.spring-table tbody tr.stocked td {
+    background: var(--stock-tint);
+    box-shadow: inset 3px 0 0 0 var(--stock-good);
+  }
+  table.spring-table tbody tr.stocked:hover td { background: var(--stock-tint-hover); }
+  table.spring-table tbody tr.stocked td:first-child { font-weight: 700; padding-left: 13px; }
+  .stock-badge {
+    display: inline-flex; align-items: center; gap: 3px; margin-left: 9px;
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px;
+    color: #ffffff; background: var(--stock-good); padding: 2px 7px 2px 6px; border-radius: 999px;
+    vertical-align: middle; white-space: nowrap;
+  }
+
+  td.lift-cell { font-weight: 600; border-radius: 4px; cursor: default; }
+  td.lift-cell.selected { outline: 1px solid var(--border); }
+  tr.stocked td.lift-cell.selected { outline-color: var(--stock-good); }
+
+  .tooltip {
+    position: fixed; pointer-events: none; background: var(--text-primary); color: var(--page-plane);
+    font-size: 12px; padding: 7px 10px; border-radius: 7px; z-index: 50; opacity: 0;
+    transition: opacity 0.08s; max-width: 220px; line-height: 1.4;
+  }
+  .tooltip.show { opacity: 1; }
+
+  footer.note {
+    margin-top: 18px; font-size: 12px; color: var(--text-muted); line-height: 1.6; max-width: 720px;
+  }
+  footer.note strong { color: var(--text-secondary); }
+
+  @media print {
+    .controls, .theme-toggle, .id-tabs { display: none !important; }
+    .wire-card { break-inside: avoid; border-color: #999; }
+    body, :root { background: #fff !important; color: #000 !important; }
+    .legend-scale { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="titleblock">
+      <div class="org">Precision Garage Door Service</div>
+      <div class="org-sub">Everstead Group Services</div>
+      <h1 id="pageTitle">Torsion Spring Chart</h1>
+      <div id="formulaBlock">
+        <p class="formula">Reference Load = <code>IPPT × 3.5</code> — verified constant across all source data, at a fixed 7-turn reference point.</p>
+        <p class="formula">Lifting Capacity per door height = <code>IPPT × Full Turns ÷ 2</code>, using the shop's 4-quarter-turn-per-foot winding rate.</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="theme-toggle" id="themeToggle" type="button">🌙 Dark mode</button>
+    </div>
+  </header>
+
+  <div class="id-tabs" id="idTabs"></div>
+
+  <div id="chartView">
+    <div class="turns-ref">
+      <h2>Turns Reference — 4 quarter-turns = 1 full turn per ft of door height</h2>
+      <table>
+        <thead><tr><th>Door Height</th><th>Full Turns</th><th>Quarter Turns</th></tr></thead>
+        <tbody id="turnsRefBody"></tbody>
+      </table>
+    </div>
+
+    <div class="controls">
+      <span class="label">Door Height</span>
+      <div class="pill-row" id="heightPills"></div>
+      <div class="legend-scale">
+        <span id="legendMin">–</span>
+        <div class="legend-bar"></div>
+        <span id="legendMax">–</span>
+        <span>lb, this height</span>
+      </div>
+      <div class="stock-legend" id="stockLegend" style="display:none;">
+        <span class="stock-badge" style="margin-left:0;">&#10003; Stock</span><span>springs your shop carries</span>
+      </div>
+    </div>
+
+    <div id="wireCards"></div>
+
+    <footer class="note" id="footerNote"></footer>
+  </div>
+
+  <div id="finderView" style="display:none;">
+    <div class="finder-card">
+      <h2>Spring Finder</h2>
+      <p class="finder-sub">Either enter the I.D., wire size, and length of the spring you're looking at, or just enter the door weight if you don't have spring specs. Either way, this converts down to the closest spring we stock in 1.75" I.D. Matches within 5&nbsp;lb of the target are marked ✓. For a two-spring door, the two stocked replacements don't need to match each other in size.</p>
+
+      <div class="finder-controls">
+        <div class="finder-field">
+          <span class="finder-field-label">Target from</span>
+          <div class="pill-row" id="finderSourcePills"></div>
+        </div>
+        <div class="finder-field">
+          <span class="finder-field-label">Door Height</span>
+          <div class="pill-row" id="finderHeightPills"></div>
+        </div>
+        <div class="finder-field">
+          <span class="finder-field-label">Springs on door</span>
+          <div class="pill-row" id="finderModePills"></div>
+        </div>
+      </div>
+
+      <div id="finderSpringInputs">
+        <div class="finder-field" style="margin-bottom:12px;">
+          <span class="finder-field-label">Spring I.D. (what you're looking at)</span>
+          <div class="pill-row" id="finderIdPills"></div>
+        </div>
+        <div class="finder-rows" id="finderRows"></div>
+        <p class="finder-sub" id="estimateNote" style="display:none; margin:2px 0 0;"></p>
+      </div>
+
+      <div id="finderWeightInputs" style="display:none; margin-bottom:16px;">
+        <div class="finder-field">
+          <span class="finder-field-label">Door weight (lbs)</span>
+          <input type="number" class="finder-select" id="finderWeightInput" min="0" step="1" placeholder="e.g. 130" style="width:110px;">
+        </div>
+      </div>
+
+      <div class="finder-result" id="finderResult"></div>
+    </div>
+  </div>
+
+  <div class="credit">Built by Xavier Ramirez</div>
+
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const doorHeights = ["6'6\"", "7'-0\"", "7'6\"", "8'-0\"", "8'6\""];
+const fullTurns    = [6.5, 7.0, 7.5, 8.0, 8.5];
+const quarterTurns = [26, 28, 30, 32, 34];
+
+// Each row: [length_in, ippt, cap@6'6, cap@7'0, cap@7'6, cap@8'0, cap@8'6]
+const pages = {
+  '1.75': {
+    label: '1.75" I.D.',
+    tag: 'Primary',
+    groups: [
+      { wire: '0.207"', rows: [
+        [20,30.1,97.83,105.35,112.88,120.40,127.93],
+        [21,28.6,92.95,100.10,107.25,114.40,121.55],
+        [22,27.2,88.40,95.20,102.00,108.80,115.60],
+        [23,26.0,84.50,91.00,97.50,104.00,110.50],
+        [24,24.9,80.93,87.15,93.38,99.60,105.83],
+        [25,23.8,77.35,83.30,89.25,95.20,101.15],
+        [26,22.9,74.43,80.15,85.88,91.60,97.33],
+        [27,22.0,71.50,77.00,82.50,88.00,93.50],
+        [28,21.2,68.90,74.20,79.50,84.80,90.10],
+        [29,20.4,66.30,71.40,76.50,81.60,86.70],
+        [30,19.7,64.03,68.95,73.88,78.80,83.73],
+        [31,19.1,62.08,66.85,71.63,76.40,81.18],
+        [32,18.4,59.80,64.40,69.00,73.60,78.20],
+      ]},
+      { wire: '0.218"', rows: [
+        [22,35.8,116.35,125.30,134.25,143.20,152.15],
+        [23,34.1,110.83,119.35,127.88,136.40,144.93],
+        [24,32.6,105.95,114.10,122.25,130.40,138.55],
+        [25,31.3,101.73,109.55,117.38,125.20,133.03],
+        [26,30.0,97.50,105.00,112.50,120.00,127.50],
+        [27,28.9,93.93,101.15,108.38,115.60,122.83],
+        [28,27.8,90.35,97.30,104.25,111.20,118.15],
+        [29,26.5,86.13,92.75,99.38,106.00,112.63],
+        [30,25.9,84.18,90.65,97.13,103.60,110.08],
+        [31,25.0,81.25,87.50,93.75,100.00,106.25],
+        [32,24.2,78.65,84.70,90.75,96.80,102.85],
+        [33,23.4,76.05,81.90,87.75,93.60,99.45],
+        [34,22.7,73.78,79.45,85.13,90.80,96.48],
+      ]},
+      { wire: '0.225"', rows: [
+        [25,36.2,117.65,126.70,135.75,144.80,153.85],
+        [26,34.8,113.10,121.80,130.50,139.20,147.90],
+        [27,33.4,108.55,116.90,125.25,133.60,141.95],
+        [28,32.2,104.65,112.70,120.75,128.80,136.85],
+        [29,31.0,100.75,108.50,116.25,124.00,131.75],
+        [30,29.9,97.18,104.65,112.13,119.60,127.08],
+        [31,28.9,93.93,101.15,108.38,115.60,122.83],
+        [32,28.0,91.00,98.00,105.00,112.00,119.00],
+        [33,27.1,88.08,94.85,101.63,108.40,115.18],
+        [34,26.3,85.48,92.05,98.63,105.20,111.78],
+        [35,25.5,82.88,89.25,95.63,102.00,108.38],
+        [36,24.8,80.60,86.80,93.00,99.20,105.40],
+        [37,24.1,78.33,84.35,90.38,96.40,102.43],
+      ]},
+      { wire: '0.234"', rows: [
+        [25,43.6,141.70,152.60,163.50,174.40,185.30],
+        [26,41.9,136.18,146.65,157.13,167.60,178.08],
+        [27,40.3,130.98,141.05,151.13,161.20,171.28],
+        [28,38.8,126.10,135.80,145.50,155.20,164.90],
+        [29,37.4,121.55,130.90,140.25,149.60,158.95],
+        [30,36.1,117.33,126.35,135.38,144.40,153.43],
+        [31,34.9,113.43,122.15,130.88,139.60,148.33],
+        [32,33.7,109.53,117.95,126.38,134.80,143.23],
+        [33,32.7,106.28,114.45,122.63,130.80,138.98],
+        [34,31.4,102.05,109.90,117.75,125.60,133.45],
+        [35,31.0,100.75,108.50,116.25,124.00,131.75],
+      ]},
+      { wire: '0.243"', rows: [
+        [30,44.1,143.33,154.35,165.38,176.40,187.43],
+        [31,42.6,138.45,149.10,159.75,170.40,181.05],
+        [32,41.2,133.90,144.20,154.50,164.80,175.10],
+        [33,39.9,129.68,139.65,149.63,159.60,169.58],
+        [34,38.7,125.78,135.45,145.13,154.80,164.48],
+        [35,37.5,121.88,131.25,140.63,150.00,159.38],
+        [36,36.5,118.63,127.75,136.88,146.00,155.13],
+        [37,35.4,115.05,123.90,132.75,141.60,150.45],
+        [38,34.5,112.13,120.75,129.38,138.00,146.63],
+        [39,33.6,109.20,117.60,126.00,134.40,142.80],
+        [40,32.7,106.28,114.45,122.63,130.80,138.98],
+        [41,31.9,103.68,111.65,119.63,127.60,135.58],
+        [42,31.0,100.75,108.50,116.25,124.00,131.75],
+      ]},
+      { wire: '0.250"', rows: [
+        [30,50.0,162.50,175.00,187.50,200.00,212.50],
+        [31,48.3,156.98,169.05,181.13,193.20,205.28],
+        [32,46.7,151.78,163.45,175.13,186.80,198.48],
+        [33,45.2,146.90,158.20,169.50,180.80,192.10],
+        [34,43.9,142.68,153.65,164.63,175.60,186.58],
+        [35,42.6,138.45,149.10,159.75,170.40,181.05],
+        [36,41.3,134.23,144.55,154.88,165.20,175.53],
+        [37,40.2,130.65,140.70,150.75,160.80,170.85],
+        [38,39.1,127.08,136.85,146.63,156.40,166.18],
+        [39,38.0,123.50,133.00,142.50,152.00,161.50],
+        [40,37.1,120.58,129.85,139.13,148.40,157.68],
+        [41,36.1,117.33,126.35,135.38,144.40,153.43],
+        [42,35.2,114.40,123.20,132.00,140.80,149.60],
+      ]},
+      { wire: '0.262"', rows: [
+        [32,59.4,193.05,207.90,222.75,237.60,252.45],
+        [33,57.5,186.88,201.25,215.63,230.00,244.38],
+        [34,55.7,181.03,194.95,208.88,222.80,236.73],
+        [35,54.1,175.83,189.35,202.88,216.40,229.93],
+        [36,52.5,170.63,183.75,196.88,210.00,223.13],
+        [37,51.0,165.75,178.50,191.25,204.00,216.75],
+        [38,49.6,161.20,173.60,186.00,198.40,210.80],
+        [39,48.3,156.98,169.05,181.13,193.20,205.28],
+        [40,47.1,153.08,164.85,176.63,188.40,200.18],
+        [41,45.9,149.18,160.65,172.13,183.60,195.08],
+        [42,44.8,145.60,156.80,168.00,179.20,190.40],
+        [43,43.7,142.03,152.95,163.88,174.80,185.73],
+        [44,42.7,138.78,149.45,160.13,170.80,181.48],
+      ]},
+      { wire: '0.273"', rows: [
+        [30,77.0,250.22,269.47,288.71,307.96,327.21],
+        [31,74.4,241.77,260.37,278.96,297.56,316.16],
+        [32,72.0,233.87,251.86,269.85,287.84,305.83],
+        [33,69.7,226.49,243.92,261.34,278.76,296.18],
+        [34,67.6,219.54,236.43,253.31,270.20,287.09],
+        [35,65.6,213.04,229.43,245.81,262.20,278.59],
+        [36,63.7,206.86,222.78,238.69,254.60,270.51],
+        [37,61.9,201.08,216.55,232.01,247.48,262.95],
+        [38,60.2,195.59,210.63,225.68,240.72,255.77],
+        [39,58.6,190.39,205.03,219.68,234.32,248.97],
+        [40,57.1,185.45,199.71,213.98,228.24,242.51],
+        [41,55.6,180.77,194.67,208.58,222.48,236.39],
+        [42,54.3,176.31,189.88,203.44,217.00,230.56],
+        [43,53.0,172.09,185.33,198.56,211.80,225.04],
+        [44,51.7,168.06,180.99,193.91,206.84,219.77],
+      ]},
+    ]
+  },
+  '2.00': {
+    label: '2.00" I.D.',
+    tag: 'Secondary',
+    groups: [
+      { wire: '0.207"', rows: [
+        [20,25.4,82.55,88.90,95.25,101.60,107.95],
+        [21,24.2,78.65,84.70,90.75,96.80,102.85],
+        [22,23.1,75.08,80.85,86.63,92.40,98.18],
+        [23,22.1,71.83,77.35,82.88,88.40,93.93],
+        [24,21.1,68.58,73.85,79.13,84.40,89.68],
+        [25,20.3,65.98,71.05,76.13,81.20,86.28],
+        [26,19.5,63.38,68.25,73.13,78.00,82.88],
+        [27,18.8,61.10,65.80,70.50,75.20,79.90],
+      ]},
+      { wire: '0.218"', rows: [
+        [20,33.2,107.90,116.20,124.50,132.80,141.10],
+        [21,31.7,103.03,110.95,118.88,126.80,134.73],
+        [22,30.2,98.15,105.70,113.25,120.80,128.35],
+        [23,28.9,93.93,101.15,108.38,115.60,122.83],
+        [24,27.7,90.03,96.95,103.88,110.80,117.73],
+        [25,26.6,86.45,93.10,99.75,106.40,113.05],
+        [26,25.6,83.20,89.60,96.00,102.40,108.80],
+        [27,24.6,79.95,86.10,92.25,98.40,104.55],
+        [28,23.7,77.03,82.95,88.88,94.80,100.73],
+        [29,22.9,74.43,80.15,85.88,91.60,97.33],
+        [30,22.1,71.83,77.35,82.88,88.40,93.93],
+      ]},
+      { wire: '0.225"', rows: [
+        [20,38.5,125.13,134.75,144.38,154.00,163.63],
+        [21,36.6,118.95,128.10,137.25,146.40,155.55],
+        [22,35.0,113.75,122.50,131.25,140.00,148.75],
+        [23,33.4,108.55,116.90,125.25,133.60,141.95],
+        [24,32.0,104.00,112.00,120.00,128.00,136.00],
+        [25,30.8,100.10,107.80,115.50,123.20,130.90],
+        [26,29.6,96.20,103.60,111.00,118.40,125.80],
+        [27,28.5,92.63,99.75,106.88,114.00,121.13],
+        [28,27.5,89.38,96.25,103.13,110.00,116.88],
+        [29,26.5,86.13,92.75,99.38,106.00,112.63],
+        [30,25.6,83.20,89.60,96.00,102.40,108.80],
+        [31,24.8,80.60,86.80,93.00,99.20,105.40],
+        [32,24.0,78.00,84.00,90.00,96.00,102.00],
+        [33,23.3,75.73,81.55,87.38,93.20,99.03],
+      ]},
+      { wire: '0.234"', rows: [
+        [22,42.1,136.83,147.35,157.88,168.40,178.93],
+        [23,40.3,130.98,141.05,151.13,161.20,171.28],
+        [24,38.6,125.45,135.10,144.75,154.40,164.05],
+        [25,37.0,120.25,129.50,138.75,148.00,157.25],
+        [26,35.6,115.70,124.60,133.50,142.40,151.30],
+        [27,34.3,111.48,120.05,128.63,137.20,145.78],
+        [28,33.1,107.58,115.85,124.13,132.40,140.68],
+        [29,31.9,103.68,111.65,119.63,127.60,135.58],
+        [30,30.8,100.10,107.80,115.50,123.20,130.90],
+        [31,29.8,96.85,104.30,111.75,119.20,126.65],
+        [32,28.9,93.93,101.15,108.38,115.60,122.83],
+        [33,28.0,91.00,98.00,105.00,112.00,119.00],
+        [34,27.2,88.40,95.20,102.00,108.80,115.60],
+        [35,26.4,85.80,92.40,99.00,105.60,112.20],
+        [36,25.7,83.53,89.95,96.38,102.80,109.23],
+        [37,25.0,81.25,87.50,93.75,100.00,106.25],
+      ]},
+      { wire: '0.243"', rows: [
+        [25,45.2,146.90,158.20,169.50,180.80,192.10],
+        [26,43.4,141.05,151.90,162.75,173.60,184.45],
+        [27,41.8,135.85,146.30,156.75,167.20,177.65],
+        [28,40.3,130.98,141.05,151.13,161.20,171.28],
+        [29,38.9,126.43,136.15,145.88,155.60,165.33],
+        [30,37.6,122.20,131.60,141.00,150.40,159.80],
+        [31,36.4,118.30,127.40,136.50,145.60,154.70],
+        [32,35.3,114.73,123.55,132.38,141.20,150.03],
+        [33,34.2,111.15,119.70,128.25,136.80,145.35],
+        [34,33.2,107.90,116.20,124.50,132.80,141.10],
+        [35,32.2,104.65,112.70,120.75,128.80,136.85],
+        [36,31.4,102.05,109.90,117.75,125.60,133.45],
+        [37,30.5,99.13,106.75,114.38,122.00,129.63],
+      ]},
+      { wire: '0.250"', rows: [
+        [25,51.2,166.40,179.20,192.00,204.80,217.60],
+        [26,49.2,159.90,172.20,184.50,196.80,209.10],
+        [27,47.4,154.05,165.90,177.75,189.60,201.45],
+        [28,45.7,148.53,159.95,171.38,182.80,194.23],
+        [29,44.1,143.33,154.35,165.38,176.40,187.43],
+        [30,42.6,138.45,149.10,159.75,170.40,181.05],
+        [31,41.3,134.23,144.55,154.88,165.20,175.53],
+        [32,40.0,130.00,140.00,150.00,160.00,170.00],
+        [33,38.8,126.10,135.80,145.50,155.20,164.90],
+        [34,37.6,122.20,131.60,141.00,150.40,159.80],
+        [35,36.5,118.63,127.75,136.88,146.00,155.13],
+        [36,35.5,115.38,124.25,133.13,142.00,150.88],
+        [37,34.6,112.45,121.10,129.75,138.40,147.05],
+      ]},
+      { wire: '0.262"', rows: [
+        [31,52.4,170.30,183.40,196.50,209.60,222.70],
+        [32,50.7,164.78,177.45,190.13,202.80,215.48],
+        [33,49.2,159.90,172.20,184.50,196.80,209.10],
+        [34,47.8,155.35,167.30,179.25,191.20,203.15],
+        [35,46.4,150.80,162.40,174.00,185.60,197.20],
+        [36,45.1,146.58,157.85,169.13,180.40,191.68],
+        [37,43.9,142.68,153.65,164.63,175.60,186.58],
+        [38,42.7,138.78,149.45,160.13,170.80,181.48],
+        [39,41.6,135.20,145.60,156.00,166.40,176.80],
+        [40,40.6,131.95,142.10,152.25,162.40,172.55],
+        [41,39.6,128.70,138.60,148.50,158.40,168.30],
+        [42,38.6,125.45,135.10,144.75,154.40,164.05],
+      ]},
+    ]
+  }
+};
+
+// Stocked springs — keyed by "<idKey>|<wire>|<length>". Empty until the shop's
+// stock list is provided; once supplied, rows will carry a green in-stock marker.
+const STOCKED = new Set([
+  '1.75|0.207"|31',
+  '1.75|0.218"|31',
+  '1.75|0.234"|35',
+  '1.75|0.250"|35',
+  '1.75|0.250"|39',
+  '1.75|0.262"|39',
+  '1.75|0.273"|39',
+]);
+
+const catVars = ['--cat-1','--cat-2','--cat-3','--cat-4','--cat-5','--cat-6','--cat-7','--cat-8','--cat-9'];
+const seqSteps = ['--seq-100','--seq-150','--seq-200','--seq-250','--seq-300','--seq-350',
+                  '--seq-400','--seq-450','--seq-500','--seq-550','--seq-600','--seq-650','--seq-700'];
+
+let activeId = '1.75';
+let activeView = '1.75'; // '1.75' | '2.00' | 'finder'
+let selectedHeight = 3; // default to 8'-0"
+
+let finderId = '2.00';        // I.D. of the spring being looked at (the one measured on the door)
+const finderStockId = '1.75'; // I.D. searched for a stocked match — fixed, since that's the only size stocked
+let finderMode = 1;   // 1 = single-spring door, 2 = two-spring door
+let finderSource = 'spring'; // 'spring' = specs typed in, 'weight' = door weight only
+let finderWeight = null;
+let finderSelections = { s1: { wire: null, length: null }, s2: { wire: null, length: null } };
+
+function attrEscape(str) {
+  return String(str).replace(/"/g, '&quot;');
+}
+
+function css(varName) {
+  return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+}
+
+function currentGroups() {
+  return pages[activeId].groups;
+}
+
+function buildTurnsRef() {
+  const body = document.getElementById('turnsRefBody');
+  body.innerHTML = doorHeights.map((h,i) =>
+    `<tr><td>${h}</td><td>${fullTurns[i].toFixed(1)}</td><td>${quarterTurns[i]}</td></tr>`
+  ).join('');
+}
+
+function updateViewVisibility() {
+  const isFinder = activeView === 'finder';
+  document.getElementById('chartView').style.display = isFinder ? 'none' : '';
+  document.getElementById('finderView').style.display = isFinder ? '' : 'none';
+  document.getElementById('formulaBlock').style.display = isFinder ? 'none' : '';
+  document.getElementById('pageTitle').textContent = isFinder
+    ? 'Spring Finder'
+    : `Torsion Spring Chart — ${pages[activeId].label}`;
+}
+
+function buildIdTabs() {
+  const el = document.getElementById('idTabs');
+  const idButtons = Object.keys(pages).map(id => {
+    const p = pages[id];
+    return `<button class="id-tab" data-view="${id}" aria-selected="${activeView === id}">
+      ${p.label} <span class="badge">${p.tag}</span>
+    </button>`;
+  }).join('');
+  const finderButton = `<button class="id-tab" data-view="finder" aria-selected="${activeView === 'finder'}">Spring Finder</button>`;
+  el.innerHTML = idButtons + finderButton;
+  el.querySelectorAll('.id-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeView = btn.dataset.view;
+      if (pages[activeView]) activeId = activeView;
+      updateViewVisibility();
+      buildIdTabs();
+      buildCards();
+      applyShading();
+    });
+  });
+}
+
+function buildPills() {
+  const row = document.getElementById('heightPills');
+  row.innerHTML = doorHeights.map((h,i) =>
+    `<button class="pill" data-i="${i}" aria-pressed="${i===selectedHeight}">${h}</button>`
+  ).join('');
+  row.querySelectorAll('.pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedHeight = parseInt(btn.dataset.i, 10);
+      render();
+    });
+  });
+}
+
+function buildFinderHeightPills() {
+  const row = document.getElementById('finderHeightPills');
+  if (!row) return;
+  row.innerHTML = doorHeights.map((h,i) =>
+    `<button class="pill" data-i="${i}" aria-pressed="${i===selectedHeight}">${h}</button>`
+  ).join('');
+  row.querySelectorAll('.pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedHeight = parseInt(btn.dataset.i, 10);
+      render();
+    });
+  });
+}
+
+function globalRange(colIdx) {
+  let min = Infinity, max = -Infinity;
+  currentGroups().forEach(g => g.rows.forEach(r => {
+    const v = r[2 + colIdx];
+    if (v < min) min = v;
+    if (v > max) max = v;
+  }));
+  return { min, max };
+}
+
+function seqColorFor(value, min, max) {
+  const t = max === min ? 0 : (value - min) / (max - min);
+  const idx = Math.round(t * (seqSteps.length - 1));
+  return { varName: seqSteps[idx], idx };
+}
+
+function buildCards() {
+  const container = document.getElementById('wireCards');
+  container.innerHTML = '';
+  const groups = currentGroups();
+  groups.forEach((group, gi) => {
+    const details = document.createElement('details');
+    details.open = true;
+    details.className = 'wire-card';
+    details.style.setProperty('--accent-color', css(catVars[gi % catVars.length]));
+
+    const lengths = group.rows.map(r => r[0]);
+    const summary = document.createElement('summary');
+    summary.innerHTML = `<span class="name">Wire ${group.wire}</span>
+      <span class="meta">${group.rows.length} lengths · ${lengths[0]}"–${lengths[lengths.length-1]}" <span class="chevron">▶</span></span>`;
+    details.appendChild(summary);
+
+    const table = document.createElement('table');
+    table.className = 'spring-table';
+    table.dataset.group = gi;
+    const thead = document.createElement('thead');
+    thead.innerHTML = `<tr>
+      <th>Length (in)</th><th>IPPT (in-lb/turn)</th>
+      ${doorHeights.map((h,i) => `<th data-i="${i}">@ ${h}</th>`).join('')}
+    </tr>`;
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    group.rows.forEach(r => {
+      const isStocked = STOCKED.has(`${activeId}|${group.wire}|${r[0]}`);
+      const tr = document.createElement('tr');
+      if (isStocked) tr.className = 'stocked';
+      const badge = isStocked ? '<span class="stock-badge">&#10003; Stock</span>' : '';
+      let cells = `<td>${r[0]}${badge}</td><td>${r[1].toFixed(1)}</td>`;
+      for (let i = 0; i < 5; i++) {
+        cells += `<td class="lift-cell" data-i="${i}" data-length="${r[0]}" data-ippt="${r[1]}" data-turns="${fullTurns[i]}" data-value="${r[2+i].toFixed(2)}" data-height="${attrEscape(doorHeights[i])}">${r[2+i].toFixed(2)}</td>`;
+      }
+      tr.innerHTML = cells;
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    details.appendChild(table);
+    container.appendChild(details);
+  });
+
+  document.getElementById('stockLegend').style.display = STOCKED.size ? 'flex' : 'none';
+}
+
+function applyShading() {
+  const { min, max } = globalRange(selectedHeight);
+  document.getElementById('legendMin').textContent = min.toFixed(0);
+  document.getElementById('legendMax').textContent = max.toFixed(0);
+
+  document.querySelectorAll('table.spring-table thead th').forEach(th => {
+    th.classList.toggle('selected', parseInt(th.dataset.i, 10) === selectedHeight);
+  });
+
+  document.querySelectorAll('td.lift-cell').forEach(td => {
+    const i = parseInt(td.dataset.i, 10);
+    td.classList.remove('selected');
+    if (i !== selectedHeight) {
+      td.style.background = '';
+      td.style.color = '';
+      return;
+    }
+    td.classList.add('selected');
+    const value = parseFloat(td.dataset.value);
+    const { varName, idx } = seqColorFor(value, min, max);
+    td.style.background = `var(${varName})`;
+    td.style.color = idx >= 6 ? '#ffffff' : '#0b0b0b';
+  });
+}
+
+function render() {
+  buildPills();
+  buildFinderHeightPills();
+  applyShading();
+  computeFinder();
+}
+
+// ---- Spring Finder ----
+
+function stockedList(idKey) {
+  const list = [];
+  pages[idKey].groups.forEach(g => g.rows.forEach(r => {
+    if (STOCKED.has(`${idKey}|${g.wire}|${r[0]}`)) list.push({ wire: g.wire, length: r[0], row: r });
+  }));
+  return list;
+}
+
+function capacityAt(entry, heightIdx) { return entry.row[2 + heightIdx]; }
+
+function buildFinderIdPills() {
+  const el = document.getElementById('finderIdPills');
+  el.innerHTML = Object.keys(pages).map(id =>
+    `<button class="pill" data-id="${id}" aria-pressed="${id === finderId}">${pages[id].label}</button>`
+  ).join('');
+  el.querySelectorAll('.pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      finderId = btn.dataset.id;
+      finderSelections.s1 = { wire: null, length: null };
+      finderSelections.s2 = { wire: null, length: null };
+      buildFinderIdPills();
+      buildFinderRows();
+      computeFinder();
+    });
+  });
+}
+
+function buildFinderSourcePills() {
+  const el = document.getElementById('finderSourcePills');
+  el.innerHTML = `<button class="pill" data-src="spring" aria-pressed="${finderSource === 'spring'}">Existing springs</button>
+    <button class="pill" data-src="weight" aria-pressed="${finderSource === 'weight'}">Door Weight</button>`;
+  el.querySelectorAll('.pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      finderSource = btn.dataset.src;
+      buildFinderSourcePills();
+      updateFinderInputVisibility();
+      computeFinder();
+    });
+  });
+}
+
+function updateFinderInputVisibility() {
+  document.getElementById('finderSpringInputs').style.display = finderSource === 'spring' ? '' : 'none';
+  document.getElementById('finderWeightInputs').style.display = finderSource === 'weight' ? '' : 'none';
+}
+
+function setupWeightInput() {
+  const inp = document.getElementById('finderWeightInput');
+  inp.addEventListener('input', () => {
+    const v = parseFloat(inp.value);
+    finderWeight = isNaN(v) || v <= 0 ? null : v;
+    computeFinder();
+  });
+}
+
+function buildFinderModePills() {
+  const el = document.getElementById('finderModePills');
+  el.innerHTML = `<button class="pill" data-mode="1" aria-pressed="${finderMode === 1}">Single spring</button>
+    <button class="pill" data-mode="2" aria-pressed="${finderMode === 2}">Two springs</button>`;
+  el.querySelectorAll('.pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      finderMode = parseInt(btn.dataset.mode, 10);
+      buildFinderModePills();
+      buildFinderRows();
+      computeFinder();
+    });
+  });
+}
+
+function buildFinderRows() {
+  const groups = pages[finderId].groups;
+  const container = document.getElementById('finderRows');
+  let html = '';
+  for (let idx = 1; idx <= finderMode; idx++) {
+    const slot = 's' + idx;
+    const sel = finderSelections[slot];
+    if (!sel.wire || !groups.find(g => g.wire === sel.wire)) sel.wire = groups[0].wire;
+    const g = groups.find(x => x.wire === sel.wire);
+    const lengths = g.rows.map(r => r[0]);
+    if (!sel.length) sel.length = lengths[Math.floor(lengths.length / 2)];
+    html += `<div class="finder-row">
+      <span class="finder-row-label">${finderMode === 2 ? 'Spring ' + idx : "Spring you're looking at"}</span>
+      <select class="finder-select" data-slot="${slot}" data-field="wire">
+        ${groups.map(gr => `<option value="${attrEscape(gr.wire)}" ${gr.wire === sel.wire ? 'selected' : ''}>${gr.wire} wire</option>`).join('')}
+      </select>
+      <label style="display:flex; flex-direction:column; gap:3px; font-size:11px; color:var(--text-muted); font-weight:700; text-transform:uppercase; letter-spacing:0.4px;">
+        Length (in)
+        <input type="number" class="finder-select" data-slot="${slot}" data-field="length" min="${lengths[0]}" max="${lengths[lengths.length-1]}" step="0.1"
+          value="${sel.length}" placeholder="${lengths[Math.floor(lengths.length/2)]}" style="width:90px; text-transform:none; font-weight:400; letter-spacing:normal;">
+      </label>
+      <span class="finder-target-sub" style="align-self:flex-end;">charted ${lengths[0]}"–${lengths[lengths.length-1]}"</span>
+    </div>`;
+  }
+  container.innerHTML = html;
+  container.querySelectorAll('select').forEach(sel => {
+    sel.addEventListener('change', () => {
+      const slot = sel.dataset.slot;
+      finderSelections[slot].wire = sel.value;
+      finderSelections[slot].length = null;
+      buildFinderRows();
+      computeFinder();
+    });
+  });
+  container.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('input', () => {
+      const slot = inp.dataset.slot, field = inp.dataset.field;
+      const v = parseFloat(inp.value);
+      finderSelections[slot][field] = isNaN(v) || v <= 0 ? null : v;
+      computeFinder();
+    });
+  });
+}
+
+function diffBadge(diff) {
+  const within = Math.abs(diff) <= 5;
+  const sign = diff > 0 ? '+' : '';
+  return `<span class="diff-badge ${within ? 'good' : 'far'}">${sign}${diff.toFixed(1)} lb${within ? ' &#10003;' : ''}</span>`;
+}
+
+function matchSpecHtml(it, kind) {
+  return kind === 'single'
+    ? `${it.wire} &times; ${it.length}"`
+    : `${it.a.wire} &times; ${it.a.length}"<span class="plus">+</span>${it.b.wire} &times; ${it.b.length}"`;
+}
+function matchCap(it, kind) { return kind === 'single' ? it.cap : it.sum; }
+
+function renderFinderMatches(target, items, kind, extra) {
+  const el = document.getElementById('finderResult');
+  const heightLabel = doorHeights[selectedHeight];
+  let head;
+  if (extra && extra.weightMode) {
+    head = kind === 'single'
+      ? `<div class="finder-target">Target capacity: <strong>${target.toFixed(1)} lb</strong> <span class="finder-target-sub">(full door weight, one spring)</span> @ ${heightLabel}</div>`
+      : `<div class="finder-target">Target capacity: <strong>${target.toFixed(1)} lb</strong> <span class="finder-target-sub">(total door weight, split across 2 springs)</span> @ ${heightLabel}</div>`;
+  } else {
+    head = kind === 'single'
+      ? `<div class="finder-target">Target capacity: <strong>${target.toFixed(1)} lb</strong> @ ${heightLabel}</div>`
+      : `<div class="finder-target">Combined target: <strong>${target.toFixed(1)} lb</strong> <span class="finder-target-sub">(Spring 1: ${extra.c1.toFixed(1)} lb + Spring 2: ${extra.c2.toFixed(1)} lb)</span> @ ${heightLabel}</div>`;
+  }
+
+  if (!items.length) {
+    el.innerHTML = head + `<p class="finder-empty">No stocked springs are marked yet for ${pages[finderStockId].label} — nothing to match against.</p>`;
+    return;
+  }
+
+  const top = items[0];
+  const rest = items.slice(1);
+  const within = Math.abs(top.diff) <= 5;
+
+  const recommendCard = `<div class="recommend-card ${within ? 'good' : 'far'}">
+    <div class="recommend-label">${within ? '&#10003; Recommended spring' : '&#9888; Closest available — outside 5 lb tolerance'}</div>
+    <div class="recommend-spec">${matchSpecHtml(top, kind)}</div>
+    <div class="recommend-meta">${matchCap(top, kind).toFixed(1)} lb${diffBadge(top.diff)}</div>
+  </div>`;
+
+  let altSection = '';
+  if (rest.length) {
+    const rows = rest.map(it => `<div class="match-row">
+        <span class="match-spec">${matchSpecHtml(it, kind)}</span>
+        <span class="match-cap">${matchCap(it, kind).toFixed(1)} lb</span>
+        ${diffBadge(it.diff)}
+      </div>`).join('');
+    altSection = `<details><summary class="alt-toggle">Show ${rest.length} other close option${rest.length > 1 ? 's' : ''}</summary>
+      <div class="match-list">${rows}</div>
+    </details>`;
+  }
+
+  el.innerHTML = head + recommendCard + altSection;
+}
+
+// Looks up (or linearly interpolates/extrapolates between) real charted rows for a
+// wire size, so a typed length that isn't one of the exact charted lengths still gets
+// a capacity — no invented formula, just interpolation between real supplier data points.
+function capacityForInterp(idKey, wire, length, heightIdx) {
+  const g = pages[idKey].groups.find(x => x.wire === wire);
+  if (!g || !g.rows.length) return null;
+  const rows = g.rows;
+  const exact = rows.find(r => r[0] === length);
+  if (exact) return { value: exact[2 + heightIdx], mode: 'exact' };
+
+  let lo = null, hi = null;
+  for (const r of rows) {
+    if (r[0] < length) lo = r;
+    if (r[0] > length && hi === null) hi = r;
+  }
+  if (lo && hi) {
+    const t = (length - lo[0]) / (hi[0] - lo[0]);
+    return { value: lo[2 + heightIdx] + t * (hi[2 + heightIdx] - lo[2 + heightIdx]), mode: 'interpolated' };
+  }
+  // outside the charted range — extrapolate off the nearest two points
+  const a = lo ? rows[rows.length - 2] || rows[rows.length - 1] : rows[0];
+  const b = lo ? rows[rows.length - 1] : rows[1] || rows[0];
+  if (a === b) return { value: a[2 + heightIdx], mode: 'extrapolated' };
+  const slope = (b[2 + heightIdx] - a[2 + heightIdx]) / (b[0] - a[0]);
+  return { value: a[2 + heightIdx] + slope * (length - a[0]), mode: 'extrapolated' };
+}
+
+function pairUpMatches(stocked, h, target) {
+  const pairs = [];
+  for (let i = 0; i < stocked.length; i++) {
+    for (let j = i; j < stocked.length; j++) {
+      const sum = capacityAt(stocked[i], h) + capacityAt(stocked[j], h);
+      pairs.push({ a: stocked[i], b: stocked[j], sum, diff: sum - target });
+    }
+  }
+  pairs.sort((p, q) => Math.abs(p.diff) - Math.abs(q.diff));
+  return pairs;
+}
+
+function computeFinder() {
+  const h = selectedHeight;
+  const stocked = stockedList(finderStockId);
+  const estNote = document.getElementById('estimateNote');
+  const resultEl = document.getElementById('finderResult');
+
+  if (finderSource === 'weight') {
+    if (estNote) estNote.style.display = 'none';
+    if (finderWeight == null) {
+      resultEl.innerHTML = '<p class="finder-empty">Enter the door weight to see recommended springs.</p>';
+      return;
+    }
+    if (finderMode === 1) {
+      const target = finderWeight;
+      const matches = stocked.map(e => {
+        const cap = capacityAt(e, h);
+        return { ...e, cap, diff: cap - target };
+      }).sort((a, b) => Math.abs(a.diff) - Math.abs(b.diff));
+      renderFinderMatches(target, matches.slice(0, 5), 'single', { weightMode: true });
+    } else {
+      const target = finderWeight; // total door weight, split across the two stocked springs
+      const pairs = pairUpMatches(stocked, h, target);
+      renderFinderMatches(target, pairs.slice(0, 5), 'pair', { weightMode: true });
+    }
+    return;
+  }
+
+  // finderSource === 'spring': look up (or interpolate between) real charted rows
+  let noteParts = [];
+  if (finderMode === 1) {
+    const sel = finderSelections.s1;
+    if (!sel.wire || !sel.length) {
+      resultEl.innerHTML = '<p class="finder-empty">Pick a wire size and enter a length.</p>';
+      if (estNote) estNote.style.display = 'none';
+      return;
+    }
+    const r = capacityForInterp(finderId, sel.wire, sel.length, h);
+    if (r.mode !== 'exact') noteParts.push(r.mode === 'interpolated'
+      ? 'That length isn’t one of the exact charted rows, so this is interpolated between the two nearest charted lengths.'
+      : 'That length is outside the charted range for this wire size, so this is extrapolated — double-check against a real spring.');
+    const target = r.value;
+    const matches = stocked.map(e => {
+      const cap = capacityAt(e, h);
+      return { ...e, cap, diff: cap - target };
+    }).sort((a, b) => Math.abs(a.diff) - Math.abs(b.diff));
+    renderFinderMatches(target, matches.slice(0, 5), 'single');
+  } else {
+    const sel1 = finderSelections.s1, sel2 = finderSelections.s2;
+    if (!sel1.wire || !sel1.length || !sel2.wire || !sel2.length) {
+      resultEl.innerHTML = '<p class="finder-empty">Pick a wire size and enter a length for both springs.</p>';
+      if (estNote) estNote.style.display = 'none';
+      return;
+    }
+    const r1 = capacityForInterp(finderId, sel1.wire, sel1.length, h);
+    const r2 = capacityForInterp(finderId, sel2.wire, sel2.length, h);
+    [['Spring 1', r1], ['Spring 2', r2]].forEach(([label, r]) => {
+      if (r.mode !== 'exact') noteParts.push(`${label}: ${r.mode === 'interpolated' ? 'interpolated between charted lengths' : 'outside charted range, extrapolated — verify'}.`);
+    });
+    const c1 = r1.value, c2 = r2.value;
+    const target = c1 + c2;
+    const pairs = pairUpMatches(stocked, h, target);
+    renderFinderMatches(target, pairs.slice(0, 5), 'pair', { c1, c2 });
+  }
+  if (estNote) {
+    estNote.style.display = noteParts.length ? '' : 'none';
+    estNote.innerHTML = noteParts.join(' ');
+  }
+}
+
+function setupTooltip() {
+  const tip = document.getElementById('tooltip');
+  document.addEventListener('mouseover', e => {
+    const td = e.target.closest('td.lift-cell');
+    if (!td) return;
+    const { length, ippt, turns, value, height } = td.dataset;
+    tip.innerHTML = `<strong>${length}" wire, IPPT ${ippt}</strong><br>${ippt} × ${turns} ÷ 2 = <strong>${value} lb</strong> @ ${height}`;
+    tip.classList.add('show');
+  });
+  document.addEventListener('mousemove', e => {
+    if (!tip.classList.contains('show')) return;
+    tip.style.left = Math.min(e.clientX + 14, window.innerWidth - 230) + 'px';
+    tip.style.top = (e.clientY + 16) + 'px';
+  });
+  document.addEventListener('mouseout', e => {
+    if (e.target.closest('td.lift-cell')) tip.classList.remove('show');
+  });
+}
+
+function setupThemeToggle() {
+  const btn = document.getElementById('themeToggle');
+  btn.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.setAttribute('data-theme', 'light');
+      btn.textContent = '🌙 Dark mode';
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      btn.textContent = '☀️ Light mode';
+    }
+    buildCards();
+    applyShading();
+  });
+}
+
+function updateFooter() {
+  document.getElementById('footerNote').innerHTML =
+    `Wire size sections are ordered by increasing diameter. Click a door-height pill above to shade toward that target — shading is scaled across the full wire-size range on the active tab, so a heavier wire's whole row will read darker than a lighter wire's at the same door height. Hover any lifting-capacity cell for the exact formula. <strong>${STOCKED.size ? 'Green dots mark springs your shop stocks.' : 'Send over the wire size and length combinations you stock, and they will be marked with a green in-stock dot.'}</strong> Values sourced directly from the shop's original charts; this page only re-presents them.`;
+}
+
+buildTurnsRef();
+buildIdTabs();
+updateViewVisibility();
+buildCards();
+setupTooltip();
+setupThemeToggle();
+updateFooter();
+buildFinderIdPills();
+buildFinderSourcePills();
+updateFinderInputVisibility();
+setupWeightInput();
+buildFinderModePills();
+buildFinderRows();
+render();
+</script>
+</body>
+</html>
